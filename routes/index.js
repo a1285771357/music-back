@@ -32,10 +32,16 @@ router.get('/', function(req, res, next) {
         }else{
           if(docs.password == req.query.password){
               console.log("登录成功："+docs);
-              res.render('index', { title: req.query.name });
+              res.json({
+                  "name": docs.password
+              })
+              // res.render('index', { title: req.query.name });
           }else{
             console.log("密码错误")
-              res.render('index',{title:"密码错误"})
+              res.json({
+                  "err": "密码错误"
+              })
+              // res.render('index',{title:"密码错误"})
           }
 
             // res.render("欢迎")
