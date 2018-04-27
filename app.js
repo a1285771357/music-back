@@ -7,6 +7,8 @@ var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
+var serchfile = require('./routes/serchfile');
+var myTotalIncome = require('./routes/myTotalIncome');
 
 var app = express();
 
@@ -22,8 +24,10 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', index);//对应后端路由
+app.use('/', index);//对应后端routes文件路由
 app.use('/users', users);
+app.use('/serchfile',serchfile);
+app.use('/mimosa/client/investor/baseaccount/myTotalIncome', myTotalIncome);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
