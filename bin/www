@@ -27,7 +27,7 @@ var server = http.createServer(app);
  */
 
 server.listen(port,function () {
-    var url = 'mongodb://zhanglei:rw123456@localhost:27017/zl';
+    var url = 'mongodb://zhanglei:rw123456@localhost:27017/music';
 
 //链接
     mongoose.connect(url);
