@@ -36,7 +36,7 @@ router.get('/', function(req, res, next) {
 
         }else if(docs){
           if(docs.password == req.query.password){
-              console.log("登录成功："+docs);
+              // console.log("登录成功："+docs);
               res.json({
                   "name": docs.name
               })
