@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
+var liked_record = require('../../src/models/liked_record');
 var dynamic_list = require('../../src/models/dynamic_list');
 var session = require('express-session');
 var fs = require('fs');
@@ -20,10 +21,17 @@ router.post('/', function(req, res, next) {
     }else{
       var errorCode=0,errorMessage=""
       if (result){//有登录状态
-        if (!req.body.id){//必传字段不能为空
+        if (!req.body.id && !req.body.username){//必传字段不能为空
           return
         }
-        var data = dynamic_list.findByIdAndUpdate(req.body.id, {liked:true})
+        //有username插入，有没创建。禁止数组重复插入
+        liked_record.findOneAndUpdate({username:req.body.username},{'$addToSet': {recordarr:req.body.id}},{upsert:true}).exec().then(function (value) {
+          if (!err){
+            var errorCode = 0,
+            errorMessage = ""
+          }
+        })
+        dynamic_list.findByIdAndUpdate(req.body.id,{$inc:{likenum:1}}).exec().then(function (value) { console.log(value) })
 
       }else{//没有登录
         var errorCode=-2,errorMessage="您尚未登录，或者登录已过期"//时间排序
@@ -31,21 +39,26 @@ router.post('/', function(req, res, next) {
       };
 
     }
-    if (data){
-      data.then(function (value) {
-        res.json({
-          errorCode:errorCode,
-          errorMessage:errorMessage,
-          liked:value.liked
-        })
-      })
-      return
-    }else{
-      res.json({
-        errorCode:errorCode,
-        errorMessage:errorMessage
-      })
-    }
+    res.json({
+       errorCode:errorCode,
+       errorMessage:errorMessage
+     })
+    // if (data){
+    //   data.then(function (value) {
+    //     res.json({
+    //       errorCode:errorCode,
+    //       errorMessage:errorMessage,
+    //       liked:value.liked,
+    //       likenum : value.likenum
+    //     })
+    //   })
+    //   return
+    // }else{
+    //   res.json({
+    //     errorCode:errorCode,
+    //     errorMessage:errorMessage
+    //   })
+    // }
 
 
   })
