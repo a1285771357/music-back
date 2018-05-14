@@ -27,6 +27,7 @@ var getImg = require('./routes/utils/getImg');
 var getDynamicList = require('./routes/review/getDynamicList');
 var sendDynamic = require('./routes/review/sendDynamic');
 var isLiked = require('./routes/review/isLiked');
+var sendReview = require('./routes/review/sendReview');
 
 var app = express();
 
@@ -82,6 +83,7 @@ app.use('/getimg', getImg);//检查登录
 app.use('/getDynamicList', getDynamicList);//获取全部动态
 app.use('/sendDynamic', sendDynamic);//发送动态
 app.use('/isLiked', isLiked);//点赞
+app.use('/sendReview', sendReview);//发送评论
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

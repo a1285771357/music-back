@@ -35,11 +35,11 @@ var dynamic_list = new Schema({
   },
   reviewdata: [{
     username:String,
+    reviewcontents:String,
     time:{
-      type:String,
+      type:Date,
       default:Date.now()
     },
-    reviewcontents:String
 
   }]
 })
