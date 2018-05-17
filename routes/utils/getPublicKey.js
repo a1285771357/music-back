@@ -5,10 +5,10 @@ var key = new NodeRsa({b:512})
 key.setOptions({encryptionScheme:'pkcs1'})
 
 router.post('/', function(req, res, next) {
-  /**设置响应头允许ajax跨域访问**/
-  res.setHeader("Access-Control-Allow-Origin","*");
-  /*星号表示所有的异域请求都可以接受，*/
-  res.setHeader("Access-Control-Allow-Methods","GET,POST");
+  // /**设置响应头允许ajax跨域访问**/
+  // res.setHeader("Access-Control-Allow-Origin","*");
+  // /*星号表示所有的异域请求都可以接受，*/
+  // res.setHeader("Access-Control-Allow-Methods","GET,POST");
 
   var publicKey = '-----BEGIN PUBLIC KEY-----\n' +
     'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCf9x+8YaLbJyvZOVsA+gf8IRWJ\n' +

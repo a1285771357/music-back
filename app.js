@@ -20,6 +20,8 @@ var users = require('./routes/users');
 var serchfile = require('./routes/serchfile');
 var myTotalIncome = require('./routes/myTotalIncome');
 var login = require('./routes/user/login');
+var logout = require('./routes/user/logout');
+var getMyHome = require('./routes/user/getMyHome');
 var getpublicKey = require('./routes/utils/getPublicKey');
 var rsa = require('./routes/user/rsa');
 var checkLogin = require('./routes/utils/checkLogin');
@@ -28,6 +30,8 @@ var getDynamicList = require('./routes/review/getDynamicList');
 var sendDynamic = require('./routes/review/sendDynamic');
 var isLiked = require('./routes/review/isLiked');
 var sendReview = require('./routes/review/sendReview');
+var getMyHome = require('./routes/user/getMyHome');
+var getReviewToMe = require('./routes/user/getReviewToMe');
 
 var app = express();
 
@@ -75,7 +79,8 @@ app.use('/', index);
 app.use('/users', users);
 app.use('/serchfile',serchfile);
 app.use('/mimosa/client/investor/baseaccount/myTotalIncome', myTotalIncome);
-app.use('/login', login);//登陆接口
+app.use('/login', login);//登录接口
+app.use('/logout', logout);//登出接口
 app.use('/rsa', rsa);//加密接口
 app.use('/getpublicKey', getpublicKey);//获取公钥
 app.use('/checkLogin', checkLogin);//检查登录
@@ -84,6 +89,8 @@ app.use('/getDynamicList', getDynamicList);//获取全部动态
 app.use('/sendDynamic', sendDynamic);//发送动态
 app.use('/isLiked', isLiked);//点赞
 app.use('/sendReview', sendReview);//发送评论
+app.use('/getMyHome', getMyHome);//获取我的信息
+app.use('/getReviewToMe', getReviewToMe);//别人对我的评论
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

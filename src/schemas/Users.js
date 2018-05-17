@@ -4,12 +4,56 @@ var Schema = mongoose.Schema;
 
 var Users = new Schema({
     name: {
-        type: String,
-        require: true
+      type: String,
+      require: true
     },
     password: {
-        type: String,
-        require: true
+      type: String,
+      require: true
+    },
+    fansnum : {
+      type:Number,
+      require:true,
+      default:0
+    },
+    sex : {
+      type:String,
+      require:true,
+      default:"male"
+    },
+    level : {
+      type:Number,
+      require:true,
+      default:1
+    },
+    isVip : {
+      type:Boolean,
+      default:false,
+      require:true
+    },
+    isEncrypt : {
+      type:Boolean,
+      default:false,
+      require:true
+    },
+    likenum : {
+      type:Number,
+      default:0,
+      require:true
+    },
+    watchnum : {
+      type:Number,
+      default:0,
+      require:true
+    },
+    proverbs : {
+      type:String,
+      require:true,
+      default:"还没有个人简介呢~~"
+    },
+    endDate : {
+      type:Date,
+      require:true
     }
 })
 

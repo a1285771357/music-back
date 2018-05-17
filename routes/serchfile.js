@@ -11,9 +11,9 @@ router.get('/', function(req, res, next) {
     // res.json({
     //     name:'adfdsfa'
     // })
-        res.setHeader("Access-Control-Allow-Origin","*");
-    /*星号表示所有的异域请求都可以接受，*/
-    res.setHeader("Access-Control-Allow-Methods","GET,POST");
+    //     res.setHeader("Access-Control-Allow-Origin","*");
+    // /*星号表示所有的异域请求都可以接受，*/
+    // res.setHeader("Access-Control-Allow-Methods","GET,POST");
     res.set( 'content-type', 'audio/mp3' );//设置返回类型
     var stream = fs.createReadStream( musicPaht );
     var responseData = [];//存储文件流
