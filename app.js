@@ -32,6 +32,15 @@ var isLiked = require('./routes/review/isLiked');
 var sendReview = require('./routes/review/sendReview');
 var getMyHome = require('./routes/user/getMyHome');
 var getReviewToMe = require('./routes/user/getReviewToMe');
+var getMyAllDynamic = require('./routes/user/getMyAllDynamic');
+var delDynamic = require('./routes/user/delDynamic');
+var buyVip = require('./routes/user/buyVip');
+var signIn = require('./routes/user/signIn');
+var updataUserProverbs = require('./routes/user/updataUserProverbs');
+var isWatch = require('./routes/user/isWatch');
+var watching = require('./routes/user/watching');
+var hideUserInfo = require('./routes/user/hideUserInfo');
+var levelTask = require('./routes/user/levelTask');
 
 var app = express();
 
@@ -91,6 +100,16 @@ app.use('/isLiked', isLiked);//点赞
 app.use('/sendReview', sendReview);//发送评论
 app.use('/getMyHome', getMyHome);//获取我的信息
 app.use('/getReviewToMe', getReviewToMe);//别人对我的评论
+app.use('/getMyAllDynamic', getMyAllDynamic);//获取我的全部动态
+app.use('/delDynamic', delDynamic);//删除我的动态
+app.use('/buyVip', buyVip);//购买VIP
+app.use('/signIn', signIn);//签到
+app.use('/updataUserProverbs', updataUserProverbs);//修改个人信息
+app.use('/hideUserInfo', hideUserInfo);//个人信息脱敏
+app.use('/isWatch', isWatch);//获取关注列表
+app.use('/watching', watching);//关注某人
+levelTask.levelTask();//等级定时任务
+levelTask.signIn();//签到定时任务
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

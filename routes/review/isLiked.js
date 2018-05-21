@@ -3,6 +3,7 @@ var router = express.Router();
 var mongoose = require("mongoose");
 var liked_record = require('../../src/models/liked_record');
 var dynamic_list = require('../../src/models/dynamic_list');
+var User = require('../../src/models/Users');
 var session = require('express-session');
 var fs = require('fs');
 var path = require('path');
@@ -31,8 +32,8 @@ router.post('/', function(req, res, next) {
             errorMessage = ""
           }
         })
-        dynamic_list.findByIdAndUpdate(req.body.id,{$inc:{likenum:1}}).exec().then(function (value) { console.log(value) })
 
+        dynamic_list.findByIdAndUpdate(req.body.id,{$inc:{likenum:1}}).exec().then(function (value) { console.log(value) })
       }else{//没有登录
         var errorCode=-2,errorMessage="您尚未登录，或者登录已过期"//时间排序
 

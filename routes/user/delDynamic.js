@@ -19,8 +19,9 @@ router.post('/', function(req, res, next) {
     }else{
       var errorCode=0,errorMessage=""
       if (result){//有登录状态，按照点赞量返回精彩动态三条，并按照时间降序返回全部
-        if (req.body.username){
-          var data = dynamic_list.remove({_id:req.body.id},function (err,data) {
+        if (req.body.id){
+          var data = dynamic_list.remove({_id:req.body.id},function (err,value) {
+            console.log(value)
             if (!err){
               var errorCode =0, errorMessage = ""
             }else{
@@ -37,11 +38,10 @@ router.post('/', function(req, res, next) {
 
     }
 
-    Promise.all([timeRows,likeRows,likedRecord]).then(function (value) {
-      res.json({
-        errorCode:errorCode,
-        errorMessage:errorMessage
-      })
+
+    res.json({
+      errorCode:errorCode,
+      errorMessage:errorMessage
     })
 
   })

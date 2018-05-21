@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
-var dynamic_list = require('../../src/models/dynamic_list');
-var Users = require('../../src/models/Users');
+var fan = require('../../src/models/fan');
 var session = require('express-session');
 var fs = require('fs');
 var path = require('path');
@@ -11,7 +10,7 @@ const moment = require('moment');
 var redisClient = redis.createClient("6379", "127.0.0.1")
 
 
-/* GET someone review me page. */
+/* 查询关注列表，判断是否关注 */
 router.post('/', function(req, res, next) {
 
   redisClient.get("sess:"+req.sessionID,function (err,result) {//redis查询是否登录
@@ -20,9 +19,9 @@ router.post('/', function(req, res, next) {
     }else{
       var errorCode=0,errorMessage=""
       if (result){//有登录状态，按照点赞量返回精彩动态三条，并按照时间降序返回全部
+        //username:登录的用户
         if (req.body.username){
-          console.log(1)
-          var data = dynamic_list.find({username:req.body.username},{reviewdata:1,likenum:1}).exec()
+          var data = fan.find({username:req.body.username},{username:0,_id:0}).exec()
         }else {
           console.log(没有正确传参)
         }
@@ -42,20 +41,11 @@ router.post('/', function(req, res, next) {
     // })
     if (data){
       data.then(function (value) {
-        var rows = [];//所有对我的评论
-        var likenum = 0;
-        value.map(function (item,index) {
-            likenum += item.likenum
-            item.reviewdata.map(function (ele,i) {
-              rows.push(ele.reviewcontents)
-            })
-        })
-        // console.log(likenum)
+        // console.log("关注的信息"+JSON.stringify(value))
         res.json({
           errorCode:errorCode,
           errorMessage:errorMessage,
-          data:rows,
-          likenum:likenum
+          data:value
         })
       })
     }else {

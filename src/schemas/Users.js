@@ -36,7 +36,7 @@ var Users = new Schema({
       default:false,
       require:true
     },
-    likenum : {
+    jifen : {
       type:Number,
       default:0,
       require:true
@@ -53,6 +53,11 @@ var Users = new Schema({
     },
     endDate : {
       type:Date,
+      require:true
+    },
+    signIn : {
+      type:Boolean,
+      default:false,
       require:true
     }
 })

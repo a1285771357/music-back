@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require("mongoose");
-var dynamic_list = require('../../src/models/dynamic_list');
-var Users = require('../../src/models/Users');
+var fan = require('../../src/models/fan');
 var session = require('express-session');
 var fs = require('fs');
 var path = require('path');
@@ -11,7 +10,7 @@ const moment = require('moment');
 var redisClient = redis.createClient("6379", "127.0.0.1")
 
 
-/* GET someone review me page. */
+/* 关注某人 */
 router.post('/', function(req, res, next) {
 
   redisClient.get("sess:"+req.sessionID,function (err,result) {//redis查询是否登录
@@ -20,9 +19,13 @@ router.post('/', function(req, res, next) {
     }else{
       var errorCode=0,errorMessage=""
       if (result){//有登录状态，按照点赞量返回精彩动态三条，并按照时间降序返回全部
-        if (req.body.username){
-          console.log(1)
-          var data = dynamic_list.find({username:req.body.username},{reviewdata:1,likenum:1}).exec()
+        //username:登录的用户，watchedname:被关注人的名字
+        if (req.body.username && req.body.watchedname){
+          //$addToSet避免重复插入
+          //向登录用户的关注列表插入新关注的人
+          var data = fan.update({username:req.body.username},{'$addToSet':{watch:req.body.watchedname}}).exec()
+          //向关注人的粉丝列表插入新粉丝
+          var data1 = fan.update({username:req.body.watchedname},{'$addToSet':{fans:req.body.username}}).exec()
         }else {
           console.log(没有正确传参)
         }
@@ -42,20 +45,10 @@ router.post('/', function(req, res, next) {
     // })
     if (data){
       data.then(function (value) {
-        var rows = [];//所有对我的评论
-        var likenum = 0;
-        value.map(function (item,index) {
-            likenum += item.likenum
-            item.reviewdata.map(function (ele,i) {
-              rows.push(ele.reviewcontents)
-            })
-        })
-        // console.log(likenum)
+        console.log("更新粉丝，关注"+JSON.stringify(value))
         res.json({
           errorCode:errorCode,
-          errorMessage:errorMessage,
-          data:rows,
-          likenum:likenum
+          errorMessage:errorMessage
         })
       })
     }else {

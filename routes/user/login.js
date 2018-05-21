@@ -83,9 +83,11 @@ router.post('/', function(req, res, next) {
           //   username : docs.username,
           //   password : docs.password
           // }
+          console.log(docs)
           res.json({
             errorCode: 0,
             errorMessage: "",
+            level:docs.level,
             data:{
               photo:"http://localhost:3001/getimg?path="+docs .imgURL
             }
